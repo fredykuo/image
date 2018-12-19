@@ -1,0 +1,31 @@
+close all; clear all;
+b=imread('bacteria.tif');
+bt=b<100;
+imshow(bt);
+bl=bwlabel(bt);
+c=max(bl(:))%%找出最大的索引值也就是區域的總數
+
+
+temp_min=inf;%%inf為極大數
+for i=1:c%%i從1到區域總數
+  a=(bl==i);%%把每個區域個別做計算,當i=5時代表將區域5的像素值設為1,其他為0
+  temp=sum(a(:));
+  if temp_min>temp
+    temp_min = temp
+    min_ind=i
+  endif
+endfor
+a=(bl==min_ind);
+figure,imshow(a);
+
+temp_max=0;
+for i=1:c
+  a=(bl==i);
+  temp=sum(a(:));
+  if temp_max<temp
+    temp_max = temp
+    max_ind=i
+  endif
+endfor
+a=(bl==max_ind);
+figure,imshow(a);
